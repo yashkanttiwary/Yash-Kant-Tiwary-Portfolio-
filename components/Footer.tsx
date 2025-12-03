@@ -30,7 +30,9 @@ export const Footer: React.FC = () => {
               {['LinkedIn', 'Instagram', 'Behance', 'Drive'].map((social) => (
                 <a 
                   key={social} 
-                  href="#" 
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white uppercase tracking-wider text-sm border-b border-transparent hover:border-white pb-1 transition-all"
                 >
                   {social}

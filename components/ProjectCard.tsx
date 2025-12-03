@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Pause, ArrowRight } from 'lucide-react';
+import { Play, Pause, ArrowRight, Loader2 } from 'lucide-react';
 import { Project } from '../types';
 
 interface ProjectCardProps {
@@ -9,20 +9,31 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const [isPreviewing, setIsPreviewing] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const togglePreview = () => {
     if (isPreviewing) {
       videoRef.current?.pause();
       setIsPreviewing(false);
+      setIsVideoLoading(false);
     } else {
       setIsPreviewing(true);
+      setIsVideoLoading(true);
       // Small timeout to allow state to update and display video element if we were hiding it via CSS
       setTimeout(() => {
-        videoRef.current?.play().catch(e => console.error("Auto-play failed:", e));
+        if (videoRef.current) {
+          videoRef.current.play().catch(e => {
+            console.error("Auto-play failed:", e);
+            setIsVideoLoading(false);
+          });
+        }
       }, 0);
     }
   };
+
+  const handleVideoLoadStart = () => setIsVideoLoading(true);
+  const handleVideoPlaying = () => setIsVideoLoading(false);
 
   return (
     <motion.div 
@@ -31,15 +42,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.6 }}
-      className="group flex flex-col gap-4 relative"
+      className={`group flex flex-col gap-4 relative transition-all duration-500 ease-out transform-gpu ${
+        isPreviewing ? 'scale-[1.02] z-10' : ''
+      }`}
     >
-      {/* Project Index */}
-      <div className="absolute -left-0 -top-8 md:-left-12 md:top-0 text-mono text-gray-700 text-sm font-bold tracking-widest">
+      {/* Project Index - Contrast fixed: text-gray-700 -> text-gray-500 for WCAG compliance */}
+      <div className="absolute -left-0 -top-8 md:-left-12 md:top-0 text-mono text-gray-500 text-sm font-bold tracking-widest">
         {project.number}
       </div>
 
       {/* Media Container */}
-      <div className="relative w-full aspect-video bg-gray-900 overflow-hidden shadow-2xl">
+      <div className="relative w-full aspect-video bg-gray-900 overflow-hidden shadow-2xl rounded-sm">
         {/* Toggle Button */}
         <button 
           onClick={togglePreview}
@@ -54,6 +67,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           {isPreviewing ? 'IMAGE' : 'PREVIEW'}
         </button>
 
+        {/* Loading Spinner - Added to fix "Black Flash" on slow networks */}
+        {isPreviewing && isVideoLoading && (
+          <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/40 pointer-events-none backdrop-blur-sm">
+            <Loader2 className="w-10 h-10 text-accent-cyan animate-spin" />
+          </div>
+        )}
+
         {/* Image Layer */}
         <div 
           className={`absolute inset-0 w-full h-full transition-opacity duration-500 z-10 ${
@@ -64,7 +84,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             src={project.imageUrl} 
             alt={project.title} 
             loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
           {/* Hover Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -82,8 +102,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             loop
             muted
             playsInline
-            preload="none" // Critical optimization: prevents loading video data until requested
+            preload="metadata" // Optimized from 'none' to 'metadata'
             className="w-full h-full object-cover"
+            onWaiting={handleVideoLoadStart}
+            onPlaying={handleVideoPlaying}
+            onLoadedData={handleVideoPlaying}
           />
         </div>
       </div>

@@ -32,7 +32,6 @@ export const Navbar: React.FC = () => {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      // Using a try-catch block for resilience against browser locale issues
       try {
         setCurrentTime(now.toLocaleTimeString('en-US', { 
           hour: '2-digit', 
@@ -40,7 +39,6 @@ export const Navbar: React.FC = () => {
           timeZone: 'Asia/Kolkata' // Bengaluru Time
         }));
       } catch (e) {
-        // Fallback if timezone is invalid in older browsers
         setCurrentTime(now.toLocaleTimeString());
       }
     };
@@ -58,6 +56,18 @@ export const Navbar: React.FC = () => {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
+  // Fix: Intercept link clicks to prevent browser navigation (which causes "refused to connect")
+  // and manually scroll to the element.
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setMenuOpen(false);
+  };
+
   return (
     <>
       <nav 
@@ -67,10 +77,13 @@ export const Navbar: React.FC = () => {
       >
         {/* Left: Logo & Time */}
         <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
-          <a href="#hero" className="text-2xl font-bold tracking-tight hover:text-accent-cyan transition-colors">
+          <a 
+            href="#hero" 
+            onClick={(e) => handleNavClick(e, '#hero')}
+            className="text-2xl font-bold tracking-tight hover:text-accent-cyan transition-colors"
+          >
             YKT
           </a>
-          {/* Use a min-height or placeholder to prevent layout shift if time loads late */}
           <span className="text-xs font-mono text-gray-500 hidden md:block min-w-[100px]">
             {currentTime ? `BENGALURU ${currentTime}` : ''}
           </span>
@@ -82,7 +95,8 @@ export const Navbar: React.FC = () => {
             <a 
               key={link.name} 
               href={link.href}
-              className="text-sm font-medium tracking-wide hover:text-accent-cyan hover:scale-105 transition-all duration-200"
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="text-sm font-medium tracking-wide hover:text-accent-cyan hover:scale-105 transition-all duration-200 cursor-pointer"
             >
               {link.name}
             </a>
@@ -106,13 +120,14 @@ export const Navbar: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-black flex flex-col justify-center items-center gap-8 md:hidden"
+            // Added overflow-y-auto to fix issue on small landscape screens
+            className="fixed inset-0 z-40 bg-black flex flex-col justify-center items-center gap-8 md:hidden overflow-y-auto py-10"
           >
             {navLinks.map((link) => (
               <a 
                 key={link.name} 
                 href={link.href}
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="text-4xl font-bold tracking-tighter hover:text-accent-cyan transition-colors"
               >
                 {link.name}
