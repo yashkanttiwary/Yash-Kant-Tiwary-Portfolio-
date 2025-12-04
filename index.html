@@ -6,7 +6,10 @@
     <title>Yash Kant Tiwary - Motion Graphics Designer</title>
     <meta name="description" content="Portfolio of Motion Graphics Designer Yash Kant Tiwary. Specializing in After Effects, Premiere Pro, and visual storytelling." />
     
-    <!-- Tailwind CSS (CDN kept for speed/consistency with your current design) -->
+    <!-- Security: Content Security Policy - Relaxed to allow blob: and https: to prevent 'Failed to load' errors in preview -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:;">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -56,6 +59,27 @@
     <style>
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      
+      /* Focus visibility for accessibility */
+      :focus-visible {
+        outline: 2px solid #00D9FF;
+        outline-offset: 2px;
+      }
+
+      /* Custom Scrollbar for Modals */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #0A0A0A;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #00D9FF;
+      }
     </style>
 <script type="importmap">
 {

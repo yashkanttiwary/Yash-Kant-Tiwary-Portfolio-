@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, Calendar, User, Target, Lightbulb, TrendingUp } from 'lucide-react';
+import { X, ExternalLink, Calendar, User, Target, Lightbulb, TrendingUp, Loader2 } from 'lucide-react';
 import { Project } from '../types';
 
 interface ProjectModalProps {
@@ -10,18 +10,24 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose }) => {
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      // Reset loading state when new project opens
+      setIsVideoLoaded(false);
     } else {
       document.body.style.overflow = 'unset';
     }
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen]);
+  }, [isOpen, project]);
 
   if (!project) return null;
+
+  const hasLiveLink = project.ctaLink && project.ctaLink !== '#';
 
   return (
     <AnimatePresence>
@@ -45,26 +51,32 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
             className="relative w-full max-w-5xl h-[90vh] bg-gray-900 rounded-xl overflow-hidden shadow-2xl flex flex-col border border-white/10"
           >
             {/* Header / Media */}
-            <div className="relative h-[40%] md:h-[50%] shrink-0">
+            <div className="relative h-[40%] md:h-[50%] shrink-0 bg-black">
               <button 
                 onClick={onClose}
-                className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black rounded-full text-white transition-colors border border-white/10"
+                className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black rounded-full text-white transition-colors border border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
+                aria-label="Close modal"
               >
                 <X size={24} />
               </button>
               
-              <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gray-900 flex items-center justify-center">
+                {!isVideoLoaded && (
+                   <Loader2 className="w-12 h-12 text-accent-cyan animate-spin absolute z-10" />
+                )}
                 <video 
                   src={project.videoUrl} 
                   autoPlay 
                   loop 
                   muted 
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-500 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  onLoadedData={() => setIsVideoLoaded(true)}
+                  onCanPlay={() => setIsVideoLoaded(true)}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-black/30" />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-black/30 pointer-events-none" />
               </div>
 
-              <div className="absolute bottom-6 left-6 md:left-10 right-6">
+              <div className="absolute bottom-6 left-6 md:left-10 right-6 z-20">
                 <div className="flex flex-wrap gap-2 mb-3">
                   {project.tags.map(tag => (
                     <span key={tag} className="px-3 py-1 bg-accent-cyan/20 text-accent-cyan text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-sm border border-accent-cyan/20">
@@ -77,7 +89,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
             </div>
 
             {/* Scrollable Body */}
-            <div className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-cyan/50" tabIndex={0}>
               <div className="flex flex-col md:flex-row gap-12">
                 
                 {/* Sidebar Info */}
@@ -95,14 +107,23 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
                     <p className="text-white font-medium">{project.role || 'Motion Designer'}</p>
                   </div>
                   
-                  <a 
-                    href={project.ctaLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-accent-cyan transition-colors rounded-sm"
-                  >
-                    View Live <ExternalLink size={16} />
-                  </a>
+                  {hasLiveLink ? (
+                    <a 
+                      href={project.ctaLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-accent-cyan transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+                    >
+                      View Live <ExternalLink size={16} />
+                    </a>
+                  ) : (
+                    <button 
+                      disabled
+                      className="flex items-center justify-center gap-2 w-full py-4 bg-gray-800 text-gray-500 font-bold uppercase tracking-widest cursor-not-allowed rounded-sm border border-gray-700"
+                    >
+                      Coming Soon <ExternalLink size={16} />
+                    </button>
+                  )}
                 </div>
 
                 {/* Narrative Content */}

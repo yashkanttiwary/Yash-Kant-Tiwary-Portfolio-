@@ -64,7 +64,7 @@ export const Navbar: React.FC = () => {
           <a 
             href="#hero" 
             onClick={(e) => handleNavClick(e, '#hero')}
-            className="text-xl font-black tracking-tighter text-white hover:text-accent-cyan transition-colors"
+            className="text-xl font-black tracking-tighter text-white hover:text-accent-cyan transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-md px-1"
           >
             YKT
           </a>
@@ -76,7 +76,7 @@ export const Navbar: React.FC = () => {
                 key={link.name} 
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="relative group px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all"
+                className="relative group px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
               >
                 <span className="relative z-10">{link.name}</span>
               </a>
@@ -92,7 +92,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Hamburger */}
           <button 
             onClick={() => setMenuOpen(!menuOpen)} 
-            className="md:hidden text-white p-1 hover:bg-white/10 rounded-full"
+            className="md:hidden text-white p-1 hover:bg-white/10 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
             aria-label="Toggle Menu"
           >
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -115,7 +115,7 @@ export const Navbar: React.FC = () => {
                   key={link.name} 
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 text-white transition-colors"
+                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
                 >
                   <div className="p-2 bg-accent-cyan/10 rounded-lg text-accent-cyan">
                     <link.icon size={20} />

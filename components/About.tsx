@@ -42,14 +42,14 @@ export const About: React.FC = () => {
             >
               Transforming Ideas into <span className="text-accent-cyan font-serif italic">Visual Stories</span>.
             </motion.h2>
-            <p className="text-lg text-gray-400 leading-relaxed mb-8">
+            <p className="text-lg text-gray-300 leading-relaxed mb-8">
               I'm Yash Kant Tiwary, a Motion Graphics Designer with a passion for rhythm and detail. I don't just move pixels; I craft narratives that resonate. My work bridges the gap between static design and cinematic experience.
             </p>
             
             <div className="relative aspect-[4/3] rounded-sm overflow-hidden group">
               <img 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
-                alt="Yash Kant Tiwary" 
+                alt="Portrait of Yash Kant Tiwary" 
                 className="object-cover w-full h-full filter grayscale transition-transform duration-700 group-hover:scale-105 group-hover:grayscale-0"
               />
             </div>
@@ -57,11 +57,11 @@ export const About: React.FC = () => {
 
           {/* Right: Timeline */}
           <div className="lg:w-1/2 flex flex-col justify-center">
-             <h3 className="text-sm font-mono uppercase tracking-widest text-gray-500 mb-12 border-b border-gray-800 pb-4">
+             <h3 className="text-sm font-mono uppercase tracking-widest text-gray-400 mb-12 border-b border-gray-800 pb-4">
                The Journey So Far
              </h3>
              
-             <div className="relative border-l border-gray-800 ml-3 md:ml-6 space-y-12 pb-12">
+             <div className="relative border-l border-gray-800 ml-3 md:ml-6 space-y-14 pb-12">
                {timeline.map((item, idx) => (
                  <motion.div 
                    key={idx}
@@ -72,14 +72,14 @@ export const About: React.FC = () => {
                    className="relative pl-8 md:pl-12"
                  >
                    {/* Node */}
-                   <span className="absolute -left-[9px] top-0 p-1 bg-black border border-accent-cyan rounded-full text-accent-cyan">
+                   <span className="absolute -left-[9px] top-0 p-1 bg-black border border-accent-cyan rounded-full text-accent-cyan z-10">
                      <item.icon size={12} />
                    </span>
                    
-                   <span className="text-accent-cyan font-mono text-sm mb-1 block">{item.year}</span>
-                   <h4 className="text-xl font-bold text-white mb-1">{item.title}</h4>
-                   <div className="text-sm text-gray-500 mb-2 uppercase tracking-wide">{item.place}</div>
-                   <p className="text-gray-400 text-sm leading-relaxed max-w-sm">{item.desc}</p>
+                   <span className="text-accent-cyan font-mono text-sm mb-2 block font-bold">{item.year}</span>
+                   <h4 className="text-2xl font-bold text-white mb-1">{item.title}</h4>
+                   <div className="text-sm text-gray-300 mb-3 uppercase tracking-wide font-medium">{item.place}</div>
+                   <p className="text-gray-300 text-base leading-relaxed max-w-sm">{item.desc}</p>
                  </motion.div>
                ))}
              </div>

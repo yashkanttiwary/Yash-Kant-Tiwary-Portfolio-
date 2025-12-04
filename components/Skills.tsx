@@ -19,10 +19,10 @@ export const Skills: React.FC = () => {
 
   return (
     <section id="skills" className="relative w-full py-32 px-6 bg-gradient-skills overflow-hidden">
-      {/* Animated overlay gradient logic via CSS animation in standard Tailwind config is handled by background-size usually, but here we rely on the subtle radial gradient */}
-      <div className="absolute inset-0 bg-black/30 z-[1]"></div>
+      {/* Darkened overlay for WCAG compliance */}
+      <div className="absolute inset-0 bg-black/90 z-[1]"></div>
       
-      {/* Collage Overlay: Converted to img tag for native lazy loading support */}
+      {/* Collage Overlay */}
       <div className="absolute inset-0 opacity-10 pointer-events-none z-0">
          <img 
             src="https://images.unsplash.com/photo-1626785774573-4b799314348d?q=80&w=2070&auto=format&fit=crop"

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Instagram, Dribbble, HardDrive, Volume2, VolumeX, ArrowDown } from 'lucide-react';
+import { Linkedin, Instagram, Dribbble, Volume2, VolumeX, ArrowDown } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const [isMuted, setIsMuted] = useState(true);
@@ -13,6 +13,19 @@ export const Hero: React.FC = () => {
     }
   };
 
+  const scrollToAbout = () => {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleSocialClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // In a real app, this would be a toast notification
+    console.log("Social links are placeholders for this demo");
+  };
+
   return (
     <section id="hero" className="relative h-screen w-full overflow-hidden flex items-center justify-center">
       {/* Background Video */}
@@ -23,7 +36,6 @@ export const Hero: React.FC = () => {
           loop 
           muted 
           playsInline 
-          preload="auto"
           className="w-full h-full object-cover opacity-60"
           poster="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop"
         >
@@ -47,19 +59,17 @@ export const Hero: React.FC = () => {
       {/* Social Sidebar */}
       <div className="fixed left-6 md:left-12 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col gap-6">
         {[
-          { Icon: Linkedin, href: 'https://www.linkedin.com', label: 'LinkedIn' },
-          { Icon: Instagram, href: 'https://www.instagram.com', label: 'Instagram' },
-          { Icon: Dribbble, href: 'https://dribbble.com', label: 'Dribbble' }, 
-          { Icon: HardDrive, href: '#', label: 'My Drive' },
+          { Icon: Linkedin, href: '#', label: 'LinkedIn' },
+          { Icon: Instagram, href: '#', label: 'Instagram' },
+          { Icon: Dribbble, href: '#', label: 'Dribbble' }, 
         ].map((item, idx) => (
           <a 
             key={idx} 
-            href={item.href} 
-            className="text-white/70 hover:text-accent-cyan hover:scale-110 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm p-1"
-            target="_blank" 
-            rel="noopener noreferrer"
+            href={item.href}
+            onClick={handleSocialClick} 
+            className="text-white/70 hover:text-accent-cyan hover:scale-110 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm p-1 cursor-not-allowed"
             aria-label={item.label}
-            title={item.label}
+            title={`${item.label} (Coming Soon)`}
           >
             <item.Icon size={20} />
           </a>
@@ -91,21 +101,23 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* Dynamic Scroll Indicator */}
-      <motion.div 
+      <motion.button 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        onClick={scrollToAbout}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 group cursor-pointer z-30"
+        aria-label="Scroll to next section"
       >
-        <span className="text-[10px] font-mono tracking-widest text-gray-400">SCROLL</span>
+        <span className="text-[10px] font-mono tracking-widest text-gray-400 group-hover:text-white transition-colors">SCROLL</span>
         <motion.div 
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
-          className="p-2 border border-white/10 rounded-full"
+          className="p-2 border border-white/10 rounded-full group-hover:border-accent-cyan/50 transition-colors"
         >
           <ArrowDown size={16} className="text-accent-cyan" />
         </motion.div>
-      </motion.div>
+      </motion.button>
     </section>
   );
 };
