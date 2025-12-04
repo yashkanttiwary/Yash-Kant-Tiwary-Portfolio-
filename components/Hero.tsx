@@ -47,11 +47,11 @@ export const Hero: React.FC = () => {
       {/* Sound Toggle */}
       <button 
         onClick={toggleMute}
-        className="absolute bottom-12 right-6 md:right-12 z-20 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white transition-all border border-white/10 group"
+        className="absolute bottom-12 right-6 md:right-12 z-20 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white transition-all border border-white/10 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
         aria-label={isMuted ? "Unmute video" : "Mute video"}
       >
         {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-        <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap bg-black/50 px-2 py-1 rounded">
+        <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap bg-black/50 px-2 py-1 rounded pointer-events-none">
           {isMuted ? "UNMUTE" : "MUTE"}
         </span>
       </button>
@@ -66,6 +66,8 @@ export const Hero: React.FC = () => {
           <a 
             key={idx} 
             href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={handleSocialClick} 
             className="text-white/70 hover:text-accent-cyan hover:scale-110 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm p-1 cursor-not-allowed"
             aria-label={item.label}
@@ -93,10 +95,10 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter leading-[1] mb-6 drop-shadow-2xl"
+          className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter leading-[1] mb-6 drop-shadow-2xl"
         >
           BRANDS THAT <br />
-          <span className="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500">MOVE FORWARD</span>
+          <span className="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500 pr-4 inline-block pb-2">MOVE FORWARD</span>
         </motion.h1>
       </div>
 
@@ -106,7 +108,7 @@ export const Hero: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
         onClick={scrollToAbout}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 group cursor-pointer z-30"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 group cursor-pointer z-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-md p-1"
         aria-label="Scroll to next section"
       >
         <span className="text-[10px] font-mono tracking-widest text-gray-400 group-hover:text-white transition-colors">SCROLL</span>

@@ -79,7 +79,7 @@ export const About: React.FC = () => {
                    <span className="text-accent-cyan font-mono text-sm mb-2 block font-bold">{item.year}</span>
                    <h4 className="text-2xl font-bold text-white mb-1">{item.title}</h4>
                    <div className="text-sm text-gray-300 mb-3 uppercase tracking-wide font-medium">{item.place}</div>
-                   <p className="text-gray-300 text-base leading-relaxed max-w-sm">{item.desc}</p>
+                   <p className="text-gray-200 text-base leading-relaxed max-w-sm">{item.desc}</p>
                  </motion.div>
                ))}
              </div>
