@@ -1,76 +1,90 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { Briefcase, Award, GraduationCap } from 'lucide-react';
 
 export const About: React.FC = () => {
-  // Smooth scroll handler for internal navigation
-  const handleScrollToSkills = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const element = document.getElementById('skills');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const timeline = [
+    {
+      year: '2025',
+      title: 'Senior Motion Designer',
+      place: 'Freelance / Agency',
+      desc: 'Leading high-impact campaigns for global tech brands and startups.',
+      icon: Briefcase
+    },
+    {
+      year: '2023',
+      title: 'Best Visual Effects',
+      place: 'Digital Design Awards',
+      desc: 'Recognized for outstanding kinetic typography in music video production.',
+      icon: Award
+    },
+    {
+      year: '2021',
+      title: 'Started Career',
+      place: 'Design Studio',
+      desc: 'Began journey mastering After Effects and visual storytelling fundamentals.',
+      icon: GraduationCap
     }
-  };
+  ];
 
   return (
     <section id="about" className="relative w-full bg-black py-24 md:py-32 overflow-hidden">
-      <div className="container mx-auto max-w-[1440px]">
-        <div className="flex flex-col md:flex-row items-stretch">
+      <div className="container mx-auto max-w-[1440px] px-6">
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           
-          {/* Left: Image (Bleeds to edge on desktop) */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.6 }}
-            className="w-full md:w-1/2 h-[50vh] md:h-auto min-h-[600px] relative overflow-hidden group"
-          >
-            <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
-              alt="Yash Kant Tiwary" 
-              loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125 transition-transform duration-700 group-hover:scale-105"
-            />
-            {/* Red Overlay Effect */}
-            <div className="absolute inset-0 bg-accent-red/30 mix-blend-multiply"></div>
-          </motion.div>
-
-          {/* Right: Content */}
-          <div className="w-full md:w-1/2 px-6 py-12 md:p-16 lg:p-24 flex flex-col justify-center">
+          {/* Left: Bio & Intro */}
+          <div className="lg:w-1/2">
             <motion.h2 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight mb-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-6xl font-bold leading-tight mb-8"
             >
-              As a Motion Graphics Designer, I Transform Ideas into <span className="font-serif italic text-white">Visual Stories</span> That Captivate.
+              Transforming Ideas into <span className="text-accent-cyan font-serif italic">Visual Stories</span>.
             </motion.h2>
-
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-lg text-gray-300 leading-relaxed max-w-lg mb-8"
-            >
-              My name is Yash Kant Tiwary. I'm a seasoned motion graphics designer and graphic designer with 4+ years of industry experience. I specialize in crafting visually stunning content using Adobe After Effects, Premiere Pro, Illustrator, and Photoshop. Every frame is designed to drive results.
-            </motion.p>
-
-            <motion.a 
-              href="#skills"
-              onClick={handleScrollToSkills}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="inline-flex items-center text-accent-cyan font-medium text-lg hover:text-white transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm px-2 py-1 -ml-2"
-              aria-label="Read more about my skills"
-            >
-              More about me
-              <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />
-            </motion.a>
+            <p className="text-lg text-gray-400 leading-relaxed mb-8">
+              I'm Yash Kant Tiwary, a Motion Graphics Designer with a passion for rhythm and detail. I don't just move pixels; I craft narratives that resonate. My work bridges the gap between static design and cinematic experience.
+            </p>
+            
+            <div className="relative aspect-[4/3] rounded-sm overflow-hidden group">
+              <img 
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
+                alt="Yash Kant Tiwary" 
+                className="object-cover w-full h-full filter grayscale transition-transform duration-700 group-hover:scale-105 group-hover:grayscale-0"
+              />
+            </div>
           </div>
+
+          {/* Right: Timeline */}
+          <div className="lg:w-1/2 flex flex-col justify-center">
+             <h3 className="text-sm font-mono uppercase tracking-widest text-gray-500 mb-12 border-b border-gray-800 pb-4">
+               The Journey So Far
+             </h3>
+             
+             <div className="relative border-l border-gray-800 ml-3 md:ml-6 space-y-12 pb-12">
+               {timeline.map((item, idx) => (
+                 <motion.div 
+                   key={idx}
+                   initial={{ opacity: 0, x: 20 }}
+                   whileInView={{ opacity: 1, x: 0 }}
+                   viewport={{ once: true }}
+                   transition={{ delay: idx * 0.2 }}
+                   className="relative pl-8 md:pl-12"
+                 >
+                   {/* Node */}
+                   <span className="absolute -left-[9px] top-0 p-1 bg-black border border-accent-cyan rounded-full text-accent-cyan">
+                     <item.icon size={12} />
+                   </span>
+                   
+                   <span className="text-accent-cyan font-mono text-sm mb-1 block">{item.year}</span>
+                   <h4 className="text-xl font-bold text-white mb-1">{item.title}</h4>
+                   <div className="text-sm text-gray-500 mb-2 uppercase tracking-wide">{item.place}</div>
+                   <p className="text-gray-400 text-sm leading-relaxed max-w-sm">{item.desc}</p>
+                 </motion.div>
+               ))}
+             </div>
+          </div>
+
         </div>
       </div>
     </section>

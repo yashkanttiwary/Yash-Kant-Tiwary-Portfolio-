@@ -1,13 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Pause, ArrowRight, Loader2 } from 'lucide-react';
+import { Play, Pause, ArrowRight, Loader2, BookOpen } from 'lucide-react';
 import { Project } from '../types';
 
 interface ProjectCardProps {
   project: Project;
+  onOpenModal: (project: Project) => void;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenModal }) => {
   const [isPreviewing, setIsPreviewing] = useState(false);
   const [isVideoLoading, setIsVideoLoading] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -20,7 +21,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     } else {
       setIsPreviewing(true);
       setIsVideoLoading(true);
-      // Small timeout to allow state to update and display video element if we were hiding it via CSS
       setTimeout(() => {
         if (videoRef.current) {
           videoRef.current.play().catch(e => {
@@ -31,9 +31,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       }, 0);
     }
   };
-
-  const handleVideoLoadStart = () => setIsVideoLoading(true);
-  const handleVideoPlaying = () => setIsVideoLoading(false);
 
   return (
     <motion.div 
@@ -46,13 +43,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         isPreviewing ? 'scale-[1.02] z-10' : ''
       }`}
     >
-      {/* Project Index - Contrast fixed for WCAG compliance */}
       <div className="absolute -left-0 -top-8 md:-left-12 md:top-0 text-mono text-gray-500 text-sm font-bold tracking-widest">
         {project.number}
       </div>
 
       {/* Media Container */}
-      <div className="relative w-full aspect-video bg-gray-900 overflow-hidden shadow-2xl rounded-sm">
+      <div className="relative w-full aspect-video bg-gray-900 overflow-hidden shadow-2xl rounded-sm group-hover:shadow-accent-cyan/10 transition-all duration-500">
+        
         {/* Toggle Button */}
         <button 
           onClick={togglePreview}
@@ -75,38 +72,29 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         )}
 
         {/* Image Layer */}
-        <div 
-          className={`absolute inset-0 w-full h-full transition-opacity duration-500 z-10 ${
-            isPreviewing ? 'opacity-0 pointer-events-none' : 'opacity-100'
-          }`}
-        >
+        <div className={`absolute inset-0 w-full h-full transition-opacity duration-500 z-10 ${isPreviewing ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
           <img 
             src={project.imageUrl} 
             alt={project.title} 
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
-          {/* Hover Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
 
         {/* Video Layer */}
-        <div 
-          className={`absolute inset-0 w-full h-full transition-opacity duration-500 z-20 bg-black ${
-            isPreviewing ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
-        >
+        <div className={`absolute inset-0 w-full h-full transition-opacity duration-500 z-20 bg-black ${isPreviewing ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <video
             ref={videoRef}
             src={project.videoUrl}
             loop
             muted
             playsInline
-            preload="metadata" // Optimized
+            preload="metadata"
             className="w-full h-full object-cover"
-            onWaiting={handleVideoLoadStart}
-            onPlaying={handleVideoPlaying}
-            onLoadedData={handleVideoPlaying}
+            onWaiting={() => setIsVideoLoading(true)}
+            onPlaying={() => setIsVideoLoading(false)}
+            onLoadedData={() => setIsVideoLoading(false)}
           />
         </div>
       </div>
@@ -124,19 +112,25 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         <h3 className="text-2xl font-medium text-white mb-2">{project.title}</h3>
         <p className="text-gray-500 text-sm leading-relaxed mb-4 max-w-md">{project.description}</p>
         
-        <a 
-          href={project.ctaLink} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="inline-flex items-center text-sm font-bold text-white border-b border-transparent hover:border-accent-cyan hover:text-accent-cyan transition-all pb-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm"
-          aria-label={`View full project details for ${project.title}`}
-        >
-          View Project <ArrowRight size={14} className="ml-1" />
-        </a>
-
-        {project.awards && (
-          <div className="mt-2 text-xs italic text-gray-600">{project.awards}</div>
-        )}
+        <div className="flex items-center gap-6">
+          <button 
+            onClick={() => onOpenModal(project)}
+            className="inline-flex items-center text-sm font-bold text-white hover:text-accent-cyan transition-colors group focus-visible:outline-none"
+            aria-label={`Read case study for ${project.title}`}
+          >
+            <BookOpen size={16} className="mr-2" />
+            Read Case Study
+          </button>
+          
+          <a 
+            href={project.ctaLink} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center text-sm font-bold text-gray-500 hover:text-white transition-colors"
+          >
+            View Live <ArrowRight size={14} className="ml-1" />
+          </a>
+        </div>
       </div>
     </motion.div>
   );

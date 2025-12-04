@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface Project {
   id: string;
   number: string;
@@ -8,6 +10,12 @@ export interface Project {
   videoUrl: string; // Direct link to mp4/webm
   ctaLink: string;
   awards?: string;
+  // New Story-Driven Fields
+  year?: string;
+  role?: string;
+  challenge?: string;
+  solution?: string;
+  outcome?: string;
 }
 
 export interface NavLink {
