@@ -46,7 +46,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         isPreviewing ? 'scale-[1.02] z-10' : ''
       }`}
     >
-      {/* Project Index - Contrast fixed: text-gray-700 -> text-gray-500 for WCAG compliance */}
+      {/* Project Index - Contrast fixed for WCAG compliance */}
       <div className="absolute -left-0 -top-8 md:-left-12 md:top-0 text-mono text-gray-500 text-sm font-bold tracking-widest">
         {project.number}
       </div>
@@ -56,18 +56,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         {/* Toggle Button */}
         <button 
           onClick={togglePreview}
-          className={`absolute top-4 right-4 z-30 flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md transition-all duration-300 text-xs font-bold tracking-wider ${
+          className={`absolute top-4 right-4 z-30 flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md transition-all duration-300 text-xs font-bold tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan ${
             isPreviewing 
               ? 'bg-accent-cyan text-black hover:bg-white' 
               : 'bg-white/10 text-white hover:bg-white/20'
           }`}
-          aria-label={isPreviewing ? "Pause Preview" : "Play Preview"}
+          aria-label={isPreviewing ? "Pause video preview" : "Play video preview"}
         >
           {isPreviewing ? <Pause size={12} /> : <Play size={12} />}
           {isPreviewing ? 'IMAGE' : 'PREVIEW'}
         </button>
 
-        {/* Loading Spinner - Added to fix "Black Flash" on slow networks */}
+        {/* Loading Spinner */}
         {isPreviewing && isVideoLoading && (
           <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/40 pointer-events-none backdrop-blur-sm">
             <Loader2 className="w-10 h-10 text-accent-cyan animate-spin" />
@@ -102,7 +102,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             loop
             muted
             playsInline
-            preload="metadata" // Optimized from 'none' to 'metadata'
+            preload="metadata" // Optimized
             className="w-full h-full object-cover"
             onWaiting={handleVideoLoadStart}
             onPlaying={handleVideoPlaying}
@@ -128,7 +128,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           href={project.ctaLink} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="inline-flex items-center text-sm font-bold text-white border-b border-transparent hover:border-accent-cyan hover:text-accent-cyan transition-all pb-1"
+          className="inline-flex items-center text-sm font-bold text-white border-b border-transparent hover:border-accent-cyan hover:text-accent-cyan transition-all pb-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm"
+          aria-label={`View full project details for ${project.title}`}
         >
           View Project <ArrowRight size={14} className="ml-1" />
         </a>

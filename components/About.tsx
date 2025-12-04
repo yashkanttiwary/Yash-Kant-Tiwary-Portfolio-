@@ -3,6 +3,15 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 export const About: React.FC = () => {
+  // Smooth scroll handler for internal navigation
+  const handleScrollToSkills = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById('skills');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="about" className="relative w-full bg-black py-24 md:py-32 overflow-hidden">
       <div className="container mx-auto max-w-[1440px]">
@@ -49,12 +58,14 @@ export const About: React.FC = () => {
             </motion.p>
 
             <motion.a 
-              href="#contact"
+              href="#skills"
+              onClick={handleScrollToSkills}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="inline-flex items-center text-accent-cyan font-medium text-lg hover:text-white transition-colors group"
+              className="inline-flex items-center text-accent-cyan font-medium text-lg hover:text-white transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm px-2 py-1 -ml-2"
+              aria-label="Read more about my skills"
             >
               More about me
               <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />

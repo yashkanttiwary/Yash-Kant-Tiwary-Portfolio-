@@ -14,28 +14,34 @@ export const Footer: React.FC = () => {
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-12">
           <div>
             <h4 className="text-sm uppercase text-gray-500 mb-2 tracking-widest">Email</h4>
-            <a href="mailto:Yashkanttiwary@gmail.com" className="text-xl hover:text-accent-cyan transition-colors">
+            <a href="mailto:Yashkanttiwary@gmail.com" className="text-xl hover:text-accent-cyan transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm">
               Yashkanttiwary@gmail.com
             </a>
           </div>
           <div>
             <h4 className="text-sm uppercase text-gray-500 mb-2 tracking-widest">Phone</h4>
-            <a href="tel:+918383069094" className="text-xl hover:text-accent-cyan transition-colors">
+            <a href="tel:+918383069094" className="text-xl hover:text-accent-cyan transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm">
               +91 8383069094
             </a>
           </div>
           
           <div className="sm:col-span-2 mt-8">
             <div className="flex gap-6 flex-wrap">
-              {['LinkedIn', 'Instagram', 'Behance', 'Drive'].map((social) => (
+              {[
+                { name: 'LinkedIn', url: 'https://www.linkedin.com' },
+                { name: 'Instagram', url: 'https://www.instagram.com' },
+                { name: 'Behance', url: 'https://www.behance.net' },
+                { name: 'Drive', url: '#' }
+              ].map((social) => (
                 <a 
-                  key={social} 
-                  href="#"
+                  key={social.name} 
+                  href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white uppercase tracking-wider text-sm border-b border-transparent hover:border-white pb-1 transition-all"
+                  className="text-gray-400 hover:text-white uppercase tracking-wider text-sm border-b border-transparent hover:border-white pb-1 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm"
+                  aria-label={`Visit my ${social.name} profile`}
                 >
-                  {social}
+                  {social.name}
                 </a>
               ))}
             </div>

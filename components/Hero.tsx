@@ -26,17 +26,19 @@ export const Hero: React.FC = () => {
       {/* Social Sidebar */}
       <div className="fixed left-6 md:left-12 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col gap-6">
         {[
-          { Icon: Linkedin, href: '#' },
-          { Icon: Instagram, href: '#' },
-          { Icon: Dribbble, href: '#' }, // Using Dribbble as proxy for Behance if Lucide lacks Behance
-          { Icon: HardDrive, href: '#' },
+          { Icon: Linkedin, href: 'https://www.linkedin.com', label: 'LinkedIn' },
+          { Icon: Instagram, href: 'https://www.instagram.com', label: 'Instagram' },
+          { Icon: Dribbble, href: 'https://dribbble.com', label: 'Dribbble' }, 
+          { Icon: HardDrive, href: '#', label: 'My Drive' },
         ].map((item, idx) => (
           <a 
             key={idx} 
             href={item.href} 
-            className="text-white/70 hover:text-accent-cyan hover:scale-110 transition-all duration-200"
+            className="text-white/70 hover:text-accent-cyan hover:scale-110 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-sm p-1"
             target="_blank" 
             rel="noopener noreferrer"
+            aria-label={item.label}
+            title={item.label}
           >
             <item.Icon size={20} />
           </a>

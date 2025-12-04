@@ -12,7 +12,7 @@ const projects: Project[] = [
     tags: ["Motion Graphics", "Social Media", "Brand Animation"],
     imageUrl: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop",
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-fashion-model-posing-in-neon-light-39878-large.mp4",
-    ctaLink: "#",
+    ctaLink: "https://www.behance.net/",
     awards: "Featured on Behance"
   },
   {
@@ -23,7 +23,7 @@ const projects: Project[] = [
     tags: ["Video Editing", "Motion Graphics", "YouTube"],
     imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop",
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-circuit-board-technology-2216-large.mp4",
-    ctaLink: "#",
+    ctaLink: "https://www.youtube.com/",
     awards: "1M+ Views"
   },
   {
@@ -34,7 +34,7 @@ const projects: Project[] = [
     tags: ["Motion Graphics", "Explainer", "After Effects"],
     imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-scifi-city-12966-large.mp4",
-    ctaLink: "#"
+    ctaLink: "https://vimeo.com/"
   },
   {
     id: "PROJECT_04",
@@ -44,7 +44,7 @@ const projects: Project[] = [
     tags: ["Typography", "Music Video", "VFX"],
     imageUrl: "https://images.unsplash.com/photo-1514525253440-b393452e3383?q=80&w=1974&auto=format&fit=crop",
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-ink-in-water-2465-large.mp4",
-    ctaLink: "#"
+    ctaLink: "https://www.spotify.com/"
   }
 ];
 
