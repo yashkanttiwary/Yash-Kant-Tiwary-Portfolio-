@@ -49,7 +49,9 @@ export const About: React.FC = () => {
             <div className="relative aspect-[4/3] rounded-sm overflow-hidden group">
               <img 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
-                alt="Portrait of Yash Kant Tiwary" 
+                alt="Portrait of Yash Kant Tiwary, Motion Graphics Designer" 
+                width="800"
+                height="600"
                 className="object-cover w-full h-full filter grayscale transition-transform duration-700 group-hover:scale-105 group-hover:grayscale-0"
               />
             </div>
@@ -73,13 +75,13 @@ export const About: React.FC = () => {
                  >
                    {/* Node */}
                    <span className="absolute -left-[9px] top-0 p-1 bg-black border border-accent-cyan rounded-full text-accent-cyan z-10">
-                     <item.icon size={12} />
+                     <item.icon size={12} aria-hidden="true" />
                    </span>
                    
                    <span className="text-accent-cyan font-mono text-sm mb-2 block font-bold">{item.year}</span>
                    <h4 className="text-2xl font-bold text-white mb-1">{item.title}</h4>
                    <div className="text-sm text-gray-300 mb-3 uppercase tracking-wide font-medium">{item.place}</div>
-                   <p className="text-gray-200 text-base leading-relaxed max-w-sm">{item.desc}</p>
+                   <p className="text-gray-300 text-base leading-relaxed max-w-sm">{item.desc}</p>
                  </motion.div>
                ))}
              </div>

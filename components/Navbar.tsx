@@ -59,12 +59,15 @@ export const Navbar: React.FC = () => {
           className={`pointer-events-auto flex items-center justify-between gap-6 px-6 py-3 rounded-full border border-white/10 shadow-2xl backdrop-blur-md transition-all duration-300 ${
             scrolled ? 'bg-black/80 w-auto' : 'bg-black/40 w-[90%] md:w-auto'
           }`}
+          role="navigation"
+          aria-label="Main Navigation"
         >
           {/* Logo */}
           <a 
             href="#hero" 
             onClick={(e) => handleNavClick(e, '#hero')}
-            className="text-xl font-black tracking-tighter text-white hover:text-accent-cyan transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-md px-1"
+            className="text-xl font-black tracking-tighter text-white hover:text-accent-cyan transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-md px-2 py-1"
+            aria-label="YKT Portfolio Home"
           >
             YKT
           </a>
@@ -76,7 +79,8 @@ export const Navbar: React.FC = () => {
                 key={link.name} 
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="relative group px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
+                className="relative group px-4 py-2 rounded-full text-sm font-medium text-gray-200 hover:text-white hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan min-h-[44px] flex items-center"
+                aria-label={`Navigate to ${link.name} section`}
               >
                 <span className="relative z-10">{link.name}</span>
               </a>
@@ -85,17 +89,19 @@ export const Navbar: React.FC = () => {
 
           {/* Time Display (Desktop) */}
           <div className="hidden md:block w-px h-4 bg-white/20 mx-2"></div>
-          <span className="hidden md:block text-xs font-mono text-accent-cyan whitespace-nowrap">
+          <span className="hidden md:block text-xs font-mono text-accent-cyan whitespace-nowrap" aria-label="Current Time in Bengaluru">
             {currentTime}
           </span>
 
           {/* Mobile Hamburger */}
           <button 
             onClick={() => setMenuOpen(!menuOpen)} 
-            className="md:hidden text-white p-1 hover:bg-white/10 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
-            aria-label="Toggle Menu"
+            className="md:hidden text-white p-3 hover:bg-white/10 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan min-w-[48px] min-h-[48px] flex items-center justify-center"
+            aria-label={menuOpen ? "Close Menu" : "Open Menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </motion.nav>
       </div>
@@ -104,10 +110,14 @@ export const Navbar: React.FC = () => {
       <AnimatePresence>
         {menuOpen && (
           <motion.div 
+            id="mobile-menu"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             className="fixed top-24 right-4 left-4 z-40 bg-gray-900/95 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:hidden overflow-hidden shadow-2xl"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile Navigation Menu"
           >
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
@@ -115,7 +125,7 @@ export const Navbar: React.FC = () => {
                   key={link.name} 
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
+                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan min-h-[56px]"
                 >
                   <div className="p-2 bg-accent-cyan/10 rounded-lg text-accent-cyan">
                     <link.icon size={20} />
@@ -125,7 +135,7 @@ export const Navbar: React.FC = () => {
               ))}
             </div>
             <div className="mt-6 pt-6 border-t border-white/10 text-center">
-              <span className="text-xs font-mono text-gray-500">
+              <span className="text-xs font-mono text-gray-400">
                 BENGALURU • {currentTime}
               </span>
             </div>
