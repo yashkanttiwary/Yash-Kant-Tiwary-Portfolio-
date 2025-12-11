@@ -1,231 +1,202 @@
 import React, { useState } from 'react';
-import { Check, Copy, Send, Loader2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Check, Loader2, Instagram, Linkedin, Dribbble } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const [copied, setCopied] = useState(false);
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [errors, setErrors] = useState({ name: '', email: '', message: '' });
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText('Yashkanttiwary@gmail.com').then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }).catch(err => {
-      console.error('Failed to copy email:', err);
-    });
-  };
-
-  const validateForm = () => {
-    const newErrors = { name: '', email: '', message: '' };
-    let isValid = true;
-
-    // Basic sanitization and validation
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-      isValid = false;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-      isValid = false;
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
+  const [formState, setFormState] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setStatus('loading');
     
-    if (!validateForm()) return;
-
-    setFormState('submitting');
-    
-    // Simulate network request with sanitization mock
-    // In production: send sanitized data to backend
+    // Simulate network request
     setTimeout(() => {
-      setFormState('success');
-      setFormData({ name: '', email: '', message: '' });
-      setErrors({ name: '', email: '', message: '' });
-      // Reset success message after 5 seconds
-      setTimeout(() => setFormState('idle'), 5000);
-    }, 1500);
+      setStatus('success');
+      setFormState({ name: '', email: '', message: '' });
+      
+      // Reset status after showing success message
+      setTimeout(() => {
+        setStatus('idle');
+      }, 3000);
+    }, 2000);
   };
 
-  const handleSocialClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log("Social link placeholder clicked");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormState(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
-    <footer id="contact" className="bg-gray-900 pt-24 pb-12 px-6 md:px-12 text-white overflow-hidden relative">
-      <div className="container mx-auto max-w-7xl">
-        
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 mb-24">
-          
-          {/* Left: Heading & Info */}
-          <div className="lg:w-1/2">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 leading-[0.9]">
-              LET'S CREATE <br />
-              <span className="text-gray-500">SOMETHING</span> <br />
-              TOGETHER.
-            </h2>
-            
-            <p className="text-gray-300 text-lg mb-12 max-w-md">
-              Have a project in mind? Looking for a motion partner? 
-              Drop a message or connect via social.
-            </p>
+    <footer id="contact" className="relative py-24 px-6 bg-background-dark overflow-hidden">
+      {/* Abstract BG elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+        <div className="absolute -top-1/4 -right-1/4 w-[50vw] h-[50vw] bg-primary blur-[150px] rounded-full"></div>
+        <div className="absolute -bottom-1/4 -left-1/4 w-[40vw] h-[40vw] bg-blue-900 blur-[120px] rounded-full"></div>
+      </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 mb-12">
-              <div>
-                <h4 className="text-sm uppercase text-gray-400 mb-4 tracking-widest font-bold">Connect</h4>
-                <ul className="space-y-4">
-                  {[
-                    { name: 'LinkedIn', url: '#' },
-                    { name: 'Instagram', url: '#' },
-                    { name: 'Behance', url: '#' }
-                  ].map((social) => (
-                    <li key={social.name}>
-                      <a 
-                        href={social.url} 
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={handleSocialClick}
-                        className="text-white hover:text-accent-cyan transition-colors text-lg font-medium opacity-80 hover:opacity-100 py-2 inline-block min-h-[44px] flex items-center"
-                        title={`${social.name} (Coming Soon)`}
-                        aria-label={`Visit my ${social.name} profile`}
-                      >
-                        {social.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+      <div className="container mx-auto max-w-7xl relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+          
+          {/* Left Column: CTA & Info */}
+          <div className="flex flex-col justify-between h-full">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter mb-6 leading-[0.9]">
+                LET'S CREATE<br/>TOGETHER
+              </h2>
+              <p className="text-gray-400 text-lg md:text-xl max-w-md mb-12 font-light leading-relaxed">
+                Have a project in mind? Let's bridge the gap between your reality and imagination. Drop me a line.
+              </p>
+              
+              <div className="mt-8">
+                <h4 className="text-sm font-bold tracking-widest text-gray-500 uppercase mb-6">Contact</h4>
+                
+                <a 
+                  href="mailto:Yashkanttiwary@gmail.com" 
+                  className="block text-2xl md:text-3xl text-white hover:text-primary transition-colors mb-4 font-light tracking-tight"
+                >
+                  Yashkanttiwary@gmail.com
+                </a>
+                
+                <a 
+                  href="tel:+918383069094" 
+                  className="block text-2xl md:text-3xl text-white hover:text-primary transition-colors font-light tracking-tight"
+                >
+                  +91 8383069094
+                </a>
               </div>
-              <div>
-                <h4 className="text-sm uppercase text-gray-400 mb-4 tracking-widest font-bold">Contact</h4>
-                <div className="space-y-4">
-                  <button 
-                    onClick={handleCopyEmail} 
-                    className="flex items-center gap-2 text-white hover:text-accent-cyan transition-colors text-left text-lg font-medium group py-2 min-h-[44px]"
-                    aria-label="Copy email address to clipboard"
-                  >
-                    Yashkanttiwary@gmail.com
-                    <Copy size={16} className={`transition-opacity ${copied ? 'text-green-400' : 'opacity-0 group-hover:opacity-100'}`} />
-                    {copied && <span className="text-xs text-green-400 font-mono ml-2">COPIED</span>}
-                  </button>
-                  <a 
-                    href="tel:+918383069094" 
-                    className="block text-white hover:text-accent-cyan transition-colors text-lg font-medium py-2 min-h-[44px] flex items-center w-fit"
-                    aria-label="Call +91 8383069094"
-                  >
-                    +91 8383069094
-                  </a>
-                </div>
-              </div>
+            </motion.div>
+
+            <div className="hidden lg:flex gap-6 mt-20">
+              <SocialLink href="#" icon={<Instagram />} label="Instagram" />
+              <SocialLink href="#" icon={<Linkedin />} label="LinkedIn" />
+              <SocialLink href="#" icon={<BehanceIcon />} label="Behance" />
+              <SocialLink href="#" icon={<Dribbble />} label="Dribbble" />
             </div>
           </div>
 
-          {/* Right: Contact Form */}
-          <div className="lg:w-1/2 bg-black/40 p-6 md:p-8 rounded-2xl border border-white/10 backdrop-blur-sm flex flex-col">
-             {formState !== 'success' && <h3 className="text-2xl font-bold mb-6">Send a Message</h3>}
-             
-             {formState === 'success' ? (
-               <motion.div 
-                 initial={{ opacity: 0, scale: 0.9 }}
-                 animate={{ opacity: 1, scale: 1 }}
-                 className="w-full flex-1 flex flex-col items-center justify-center text-center p-8 bg-accent-cyan/10 rounded-xl border border-accent-cyan/20 min-h-[250px]"
-                 role="alert"
-                 aria-live="polite"
-               >
-                 <div className="w-16 h-16 bg-accent-cyan text-black rounded-full flex items-center justify-center mb-4 shrink-0">
-                   <Check size={32} />
-                 </div>
-                 <h4 className="text-xl font-bold text-white mb-2 break-words w-full">Message Sent!</h4>
-                 <p className="text-gray-300 break-words w-full">Thanks for reaching out. I'll get back to you within 24 hours.</p>
-                 <button 
-                   onClick={() => setFormState('idle')}
-                   className="mt-6 text-sm text-accent-cyan hover:underline underline-offset-4 min-h-[44px] px-4"
-                 >
-                   Send another message
-                 </button>
-               </motion.div>
-             ) : (
-               <form onSubmit={handleSubmit} className="space-y-6 w-full" noValidate>
-                 <div>
-                   <label htmlFor="name" className="block text-xs uppercase tracking-widest text-gray-400 mb-2 font-bold">Name</label>
-                   <input 
-                     type="text" 
-                     id="name"
-                     required
-                     value={formData.name}
-                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                     className={`w-full bg-gray-800/50 border ${errors.name ? 'border-red-500' : 'border-gray-700'} rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan transition-all placeholder-gray-600`}
-                     placeholder="John Doe"
-                     aria-invalid={!!errors.name}
-                     aria-describedby={errors.name ? "name-error" : undefined}
-                   />
-                   {errors.name && <p id="name-error" className="text-red-500 text-xs mt-1">{errors.name}</p>}
-                 </div>
-                 <div>
-                   <label htmlFor="email" className="block text-xs uppercase tracking-widest text-gray-400 mb-2 font-bold">Email</label>
-                   <input 
-                     type="email" 
-                     id="email"
-                     required
-                     value={formData.email}
-                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                     className={`w-full bg-gray-800/50 border ${errors.email ? 'border-red-500' : 'border-gray-700'} rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan transition-all placeholder-gray-600`}
-                     placeholder="john@example.com"
-                     aria-invalid={!!errors.email}
-                     aria-describedby={errors.email ? "email-error" : undefined}
-                   />
-                   {errors.email && <p id="email-error" className="text-red-500 text-xs mt-1">{errors.email}</p>}
-                 </div>
-                 <div>
-                   <label htmlFor="message" className="block text-xs uppercase tracking-widest text-gray-400 mb-2 font-bold">Message</label>
-                   <textarea 
-                     id="message"
-                     required
-                     rows={4}
-                     value={formData.message}
-                     onChange={(e) => setFormData({...formData, message: e.target.value})}
-                     className={`w-full bg-gray-800/50 border ${errors.message ? 'border-red-500' : 'border-gray-700'} rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan transition-all placeholder-gray-600 resize-none`}
-                     placeholder="Tell me about your project..."
-                     aria-invalid={!!errors.message}
-                     aria-describedby={errors.message ? "message-error" : undefined}
-                   />
-                   {errors.message && <p id="message-error" className="text-red-500 text-xs mt-1">{errors.message}</p>}
-                 </div>
-                 <button 
-                   type="submit"
-                   disabled={formState === 'submitting'}
-                   className="w-full bg-white text-black font-bold py-4 rounded-lg hover:bg-accent-cyan transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed min-h-[56px] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-gray-900"
-                   aria-label={formState === 'submitting' ? 'Sending message...' : 'Send Message'}
-                 >
-                   {formState === 'submitting' ? (
-                     <>Sending <Loader2 className="animate-spin" size={20} /></>
-                   ) : (
-                     <>Send Message <Send size={20} /></>
-                   )}
-                 </button>
-               </form>
-             )}
+          {/* Right Column: Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="w-full"
+          >
+            <div className="bg-white/5 p-8 md:p-10 rounded-2xl border border-white/10 backdrop-blur-md shadow-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                Send a Message
+                <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+              </h3>
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="text-xs font-bold uppercase tracking-widest text-gray-500 ml-1">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    value={formState.name}
+                    onChange={handleChange}
+                    className="w-full bg-black/20 border border-white/10 rounded-lg p-4 text-white placeholder:text-white/20 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    placeholder="Enter your name"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-xs font-bold uppercase tracking-widest text-gray-500 ml-1">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value={formState.email}
+                    onChange={handleChange}
+                    className="w-full bg-black/20 border border-white/10 rounded-lg p-4 text-white placeholder:text-white/20 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    placeholder="Enter your email"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="message" className="text-xs font-bold uppercase tracking-widest text-gray-500 ml-1">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={4}
+                    value={formState.message}
+                    onChange={handleChange}
+                    className="w-full bg-black/20 border border-white/10 rounded-lg p-4 text-white placeholder:text-white/20 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+                    placeholder="Tell me about your project..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status !== 'idle'}
+                  className={`w-full py-5 rounded-lg font-bold text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-2 ${
+                    status === 'success' 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-white text-background-dark hover:bg-primary hover:text-white'
+                  }`}
+                >
+                  {status === 'loading' && <Loader2 className="animate-spin" size={18} />}
+                  {status === 'success' && <Check className="animate-bounce" size={18} />}
+                  {status === 'idle' && <>Send Message <Send size={16} /></>}
+                  
+                  {status === 'loading' && 'Sending...'}
+                  {status === 'success' && 'Message Sent!'}
+                </button>
+              </form>
+            </div>
+          </motion.div>
+
+          {/* Mobile Social Links */}
+          <div className="lg:hidden flex gap-6 justify-center w-full">
+            <SocialLink href="#" icon={<Instagram />} label="Instagram" />
+            <SocialLink href="#" icon={<Linkedin />} label="LinkedIn" />
+            <SocialLink href="#" icon={<BehanceIcon />} label="Behance" />
+            <SocialLink href="#" icon={<Dribbble />} label="Dribbble" />
           </div>
+
+        </div>
+
+        {/* Footer Bottom */}
+        <div className="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-white/40 text-xs font-bold tracking-widest uppercase gap-4">
+          <span>© 2025 Yash Kant Tiwary</span>
+          <span>All Rights Reserved</span>
         </div>
       </div>
 
-      <div className="container mx-auto border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 gap-4">
-        <span>© 2025 Yash Kant Tiwary. All Rights Reserved.</span>
-        <span>Designed & Built with React</span>
-      </div>
+      {/* Spacer for floating nav */}
+      <div className="h-24"></div>
     </footer>
   );
 };
+
+const SocialLink: React.FC<{ href: string; icon: React.ReactNode; label: string }> = ({ href, icon, label }) => (
+  <a 
+    href={href} 
+    className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-background-dark hover:border-white transition-all duration-300 group"
+    aria-label={label}
+  >
+    <div className="transform group-hover:scale-110 transition-transform">
+      {icon}
+    </div>
+  </a>
+);
+
+// Custom Behance Icon since it might not be in the default set
+const BehanceIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M8.22 5.5H2V18.5H8.36C11.83 18.5 13.79 16.3 13.79 13.4C13.79 11.51 12.7 10.14 11.13 9.49C12.18 8.87 13 7.79 13 6.45C13 4.38 11.55 3.5 9.07 3.5H2V5.5H8.22C9.44 5.5 10.19 6.07 10.19 7.21C10.19 8.24 9.38 8.92 7.79 8.92H4.89V10.92H8.38C10.38 10.92 11.12 11.86 11.12 13.22C11.12 14.86 10 15.93 7.84 15.93H4.89V5.5H8.22ZM16 7.5H22V9.5H16V7.5ZM19 10.5C21.21 10.5 22.5 12.03 22.5 14.28V15.17H17.43C17.51 16.03 18.23 16.51 19.06 16.51C19.67 16.51 20.08 16.29 20.35 15.87L22.19 16.97C21.6 18.06 20.52 18.5 19.09 18.5C16.89 18.5 15.35 16.94 15.35 14.5C15.35 12.16 16.94 10.5 19 10.5ZM17.51 13.62H20.44C20.38 12.82 19.86 12.28 19.02 12.28C18.2 12.28 17.61 12.81 17.51 13.62Z" />
+  </svg>
+);

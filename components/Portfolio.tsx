@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { ArrowRight, Asterisk } from 'lucide-react';
 import { ProjectCard } from './ProjectCard';
 import { ProjectModal } from './ProjectModal';
 import { Project } from '../types';
@@ -8,68 +9,67 @@ const projects: Project[] = [
   {
     id: "PROJECT_01",
     number: "01",
-    title: "Social Media Campaign - Fashion Brand",
-    description: "Dynamic Instagram reels and story animations that boosted engagement by 200%.",
-    tags: ["Motion Graphics", "Social Media"],
-    imageUrl: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop",
+    title: "Cyberpunk Visions",
+    description: "A cinematic exploration of neon-lit dystopias using Unreal Engine 5.",
+    tags: ["Motion", "3D Rendering"],
+    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuD9BAG8x0qgwldFdeT497YKJ2aOT6cPFZqXlvZ5tOCSSXKJUwJhd8XTiWaP5znP3NDAJg-JNhjYJGxmhCw-caaGU1GDdRrSKSaeZwHTIIyjdjIyPOh5iGBbG2zSZWVOs_BiA4MhyjvJtXv3G8Oojf9j6XRqx32RL4R_bAIj5O4U-fggGRZ49to3ll9Y2r7mxDIRSCUw8fr1-AxGrIN6ltRyvf67cV6cUgZBtgXZNR-EW03LVbFwmffgyo5_CCwUKYfwyTbLNQj_VOU",
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-fashion-model-posing-in-neon-light-39878-large.mp4",
     ctaLink: "#",
-    year: "2024",
+    year: "2023",
     role: "Lead Animator",
-    challenge: "The brand needed to shift from static imagery to video content without losing their minimalist identity. The challenge was to add motion that felt 'quiet' yet capturing.",
-    solution: "I developed a 'micro-motion' language where only specific elements moved—fabric textures, light leaks, and typography. This maintained elegance while increasing dwell time.",
-    outcome: "Engagement rates tripled in the first month, and the visual style became the new standard for their seasonal campaigns."
+    challenge: "The brand needed to shift from static imagery to video content without losing their minimalist identity.",
+    solution: "I developed a 'micro-motion' language where only specific elements moved—fabric textures, light leaks, and typography.",
+    outcome: "Engagement rates tripled in the first month."
   },
   {
     id: "PROJECT_02",
     number: "02",
-    title: "YouTube Intro & Outro - Tech Channel",
-    description: "High-energy intro sequence with kinetic typography and glitched logo reveal.",
-    tags: ["Video Editing", "Typography"],
-    imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop",
+    title: "Prismatic Flux",
+    description: "Experimental light simulation and refraction studies.",
+    tags: ["Abstract", "VFX"],
+    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuD7XK6ACpTolgAXuT7FUYbBOeje3Mf2b_vSy7J4KUrUwxTryO9W7GwYHtfeUTnk3SoryI70wKSt0_6EllTRBZ16FsaVuWxWmdbhA8HkmCtWpm0l_7pccU9TsSAT9qj6ihMgtCK5k6mmAVplE3H4e7vazjmlNk41MXj9wcKZsnEqmDr8EGPvOhA9jw0oK2pwJLEGmwVg39NxXQG152O4HIihWLXv-FA0QsXhYE3AbyEx9-GkSHYIoUFCzZ5bKgllU9Q4KF6FkQAtVLk",
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-circuit-board-technology-2216-large.mp4",
     ctaLink: "#",
     year: "2023",
     role: "Motion Designer",
-    challenge: "Create a 5-second intro that communicates 'Cutting Edge Technology' without looking like a generic template.",
-    solution: "Used custom glitch shaders and fast-paced kinetic typography synced to a custom sound design beat.",
-    outcome: "The channel reported higher retention rates in the first 30 seconds of their videos."
+    challenge: "Create a visual representation of light physics in a stylized manner.",
+    solution: "Used custom shaders and caustic light simulations.",
+    outcome: "Showcased at digital art exhibition."
   },
   {
     id: "PROJECT_03",
     number: "03",
-    title: "Product Explainer - SaaS Startup",
-    description: "Animated explainer video breaking down complex software features.",
-    tags: ["Explainer", "After Effects"],
-    imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+    title: "Synthwave Loop",
+    description: "Retro-futuristic landscape loop for music streaming service.",
+    tags: ["Loop", "Cinema 4D"],
+    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWoIx7h_2BRm5ony-ZaU5dz6U9-HVmiSbLNyHH7q2UWl0N3N9nF5UgqXZK73iLWVKdmn97i-bimtlcXLJ3YLvk8c7LWJz3nscuKhlUJUXWC8T9niQt1q1GI6R8sqx09FkmzLoeCfuW_0cleJHZn5nIWS6ZWkm7eSJpfeq_JM-9-jPjfP8qn7hH3w0x31Wy3azA-Oricrx__ZdnpVKw2SUtZLOUrzt_Dq71mG1nWfq9ZGxZx83D4WozgPWHdySPTaelpQzZEclgZcc",
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-scifi-city-12966-large.mp4",
     ctaLink: "#",
     year: "2023",
-    role: "2D Animator",
-    challenge: "Explain a complex backend architecture to non-technical investors in under 60 seconds.",
-    solution: "Used an abstract isometric style to represent data flows, making the invisible visible and easy to digest.",
-    outcome: "Used successfully in their Series A pitch deck."
+    role: "3D Artist",
   },
   {
     id: "PROJECT_04",
     number: "04",
-    title: "Music Video Typography",
-    description: "Kinetic typography overlay for an indie artist's latest single release.",
-    tags: ["Typography", "VFX"],
-    imageUrl: "https://images.unsplash.com/photo-1514525253440-b393452e3383?q=80&w=1974&auto=format&fit=crop",
+    title: "Geometric Brand",
+    description: "Modern branding mockup with satisfying physics animations.",
+    tags: ["Branding", "Simulation"],
+    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDrE0VgMrRLUDEVvPZPA5Oyyxdc5r1yNfaVZl-03N5aSgcVB98DjEagdROSDfGkLeuO4sA9z3XWVlRSP9HaLgE_0P2IgqVhj1RPsYCMS8Y1SmUZyyS9veVdbXgSlnjlmgQZkQjfC1dMk1iiZFTSS_tJ6fY-jK_O17CEPxrFIhT4LYUEFI6l0SQixJgbUP-trv0NW1TALYYLH6D6X5FrLDfk9aImeBZxJ7vMfWc-c6Yc1CXo4IB2_Sw4uRZ0CnthZcXy8D1KrCzgW6c",
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-ink-in-water-2465-large.mp4",
     ctaLink: "#",
     year: "2022",
-    role: "VFX Artist",
-    challenge: "The artist wanted the lyrics to feel like they were physically interacting with the environment.",
-    solution: "Used 3D camera tracking to place text within the scene, masking it behind foreground objects for depth.",
-    outcome: "The video went viral on TikTok, largely due to the unique lyric presentation."
+    role: "Art Director",
   }
 ];
 
+const MarqueeItem: React.FC<{ text: string }> = ({ text }) => (
+  <div className="flex items-center gap-12 shrink-0">
+    <span className="text-xl md:text-2xl font-bold tracking-widest uppercase">{text}</span>
+    <Asterisk size={24} className="animate-spin-slow" />
+  </div>
+);
+
 export const Portfolio: React.FC = () => {
-  const { scrollYProgress } = useScroll();
-  const x = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -82,33 +82,70 @@ export const Portfolio: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  return (
-    <section id="work" className="relative bg-black py-32 px-6 overflow-hidden">
-      <motion.div 
-        style={{ x, opacity: 0.1 }}
-        className="absolute top-40 left-0 text-[10rem] md:text-[15rem] font-sans font-thin leading-none text-white whitespace-nowrap pointer-events-none select-none z-0"
-      >
-        WORK 2023 — 2025
-      </motion.div>
+  const marqueeTexts = ["Motion Design", "3D Rendering", "Art Direction", "Brand Identity"];
+  // Flattening manually to avoid TS issues with array methods on implicit any types
+  const marqueeItems = [...marqueeTexts, ...marqueeTexts, ...marqueeTexts, ...marqueeTexts];
 
-      <div className="container mx-auto max-w-6xl relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24 md:gap-y-32">
-          {projects.map((project, index) => (
-            <div 
-              key={project.id}
-              className={`${index % 2 === 1 ? 'md:mt-32' : ''}`}
-            >
-              <ProjectCard project={project} onOpenModal={openModal} />
-            </div>
+  return (
+    <>
+      {/* Marquee Strip */}
+      <div className="w-full bg-primary text-white py-4 overflow-hidden whitespace-nowrap border-y border-white/10 -rotate-1 scale-105 origin-left shadow-[0_0_30px_rgba(55,19,236,0.4)] relative z-20">
+        <motion.div 
+          animate={{ x: [0, -1000] }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          className="flex gap-12 items-center"
+        >
+          {marqueeItems.map((text, i) => (
+            <MarqueeItem key={i} text={text} />
           ))}
-        </div>
+        </motion.div>
       </div>
 
-      <ProjectModal 
-        project={selectedProject} 
-        isOpen={isModalOpen} 
-        onClose={closeModal} 
-      />
-    </section>
+      <section id="work" className="relative py-24 md:py-32 px-6 bg-background-dark z-10">
+        <div className="container mx-auto max-w-7xl">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+              <h2 className="text-primary font-bold text-sm tracking-[0.2em] mb-2 uppercase">Selected Works</h2>
+              <h3 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-none">RECENT<br/>PROJECTS</h3>
+            </div>
+            <button className="text-white hover:text-primary transition-colors flex items-center gap-2 border-b border-white/20 pb-1 hover:border-primary group">
+                See Full Archive
+                <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          {/* Asymmetric Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-min">
+            {projects.map((project, index) => {
+              // Custom Grid Logic based on index to match reference
+              // Index 0: Wide Hero (Col span 2)
+              // Index 1: Tall Vertical (Row span 2) - This needs to be placed carefully in CSS Grid
+              // Index 2, 3: Standard
+              
+              let gridClass = "aspect-square"; // Default
+              if (index === 0) gridClass = "md:col-span-2 aspect-[16/9] md:aspect-[2/1]"; 
+              else if (index === 1) gridClass = "md:row-span-2 aspect-[4/5] md:aspect-auto";
+              
+              return (
+                <div key={project.id} className={`${gridClass}`}>
+                  <ProjectCard 
+                    project={project} 
+                    onOpenModal={openModal} 
+                    variant={index === 0 ? 'wide' : index === 1 ? 'tall' : 'standard'}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <ProjectModal 
+          project={selectedProject} 
+          isOpen={isModalOpen} 
+          onClose={closeModal} 
+        />
+      </section>
+    </>
   );
 };

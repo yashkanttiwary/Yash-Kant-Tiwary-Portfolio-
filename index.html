@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth bg-black text-white antialiased">
+<html lang="en" class="scroll-smooth bg-[#131022] text-white antialiased">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,36 +16,28 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
+              sans: ['"Spline Sans"', 'sans-serif'],
+              display: ['"Spline Sans"', 'sans-serif'],
+              serif: ['"Playfair Display"', 'serif'],
               mono: ['Roboto Mono', 'monospace'],
             },
             colors: {
+              primary: '#3713ec',
+              'background-dark': '#131022',
+              'background-light': '#f6f6f8',
               accent: {
                 cyan: '#00D9FF',
-                red: '#D32F2F',
-                purple: '#9C27B0',
-              },
-              gray: {
-                900: '#0A0A0A',
-                700: '#555555',
-                500: '#888888',
-                300: '#CCCCCC',
-                100: '#F5F5F5',
+                purple: '#7c3aed',
               }
             },
             backgroundImage: {
-              'gradient-skills': 'radial-gradient(circle at center, #8B0000, #D32F2F)',
-              'gradient-closing': 'linear-gradient(135deg, #5E35B1, #9C27B0)',
+              'gradient-glow': 'radial-gradient(circle at center, rgba(55, 19, 236, 0.15), transparent 70%)',
             },
             letterSpacing: {
               tighter: '-0.05em',
               tight: '-0.02em',
-              widest: '0.1em',
+              widest: '0.15em',
             },
-            transitionTimingFunction: {
-              'bounce-custom': 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
-            }
           }
         }
       }
@@ -54,7 +46,8 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     
     <style>
       .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -62,23 +55,34 @@
       
       /* Focus visibility for accessibility */
       :focus-visible {
-        outline: 2px solid #00D9FF;
+        outline: 2px solid #3713ec;
         outline-offset: 2px;
       }
 
-      /* Custom Scrollbar for Modals */
-      .custom-scrollbar::-webkit-scrollbar {
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
         width: 8px;
       }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: #0A0A0A;
+      ::-webkit-scrollbar-track {
+        background: #131022;
       }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
+      ::-webkit-scrollbar-thumb {
         background: #333;
         border-radius: 4px;
       }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #00D9FF;
+      ::-webkit-scrollbar-thumb:hover {
+        background: #3713ec;
+      }
+
+      .text-stroke {
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+        color: transparent;
+      }
+      
+      .glass-panel {
+        background: rgba(19, 16, 34, 0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
       }
     </style>
 <script type="importmap">
@@ -95,7 +99,7 @@
 }
 </script>
 </head>
-  <body>
+  <body class="bg-background-dark text-white">
     <div id="root"></div>
     <!-- Vite Entry Point - CRITICAL FOR VERCEL -->
     <script type="module" src="/index.tsx"></script>

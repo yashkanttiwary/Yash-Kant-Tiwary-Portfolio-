@@ -60,7 +60,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
             <div className="relative h-[40%] md:h-[50%] shrink-0 bg-black">
               <button 
                 onClick={onClose}
-                className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black rounded-full text-white transition-colors border border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
+                className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black rounded-full text-white transition-colors border border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 aria-label="Close modal"
               >
                 <X size={24} />
@@ -68,7 +68,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
               
               <div className="absolute inset-0 bg-gray-900 flex items-center justify-center">
                 {!isVideoLoaded && (
-                   <Loader2 className="w-12 h-12 text-accent-cyan animate-spin absolute z-10" />
+                   <Loader2 className="w-12 h-12 text-primary animate-spin absolute z-10" />
                 )}
                 <video 
                   src={project.videoUrl} 
@@ -86,7 +86,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
               <div className="absolute bottom-6 left-6 md:left-10 right-6 z-20">
                 <div className="flex flex-wrap gap-2 mb-3">
                   {project.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 bg-accent-cyan/20 text-accent-cyan text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-sm border border-accent-cyan/20">
+                    <span key={tag} className="px-3 py-1 bg-primary/20 text-primary text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-sm border border-primary/20">
                       {tag}
                     </span>
                   ))}
@@ -96,7 +96,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
             </div>
 
             {/* Scrollable Body */}
-            <div className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-cyan/50" tabIndex={0}>
+            <div className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50" tabIndex={0}>
               <div className="flex flex-col md:flex-row gap-12">
                 
                 {/* Sidebar Info */}
@@ -119,7 +119,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
                       href={project.ctaLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-accent-cyan transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+                      className="flex items-center justify-center gap-2 w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-primary hover:text-white transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
                       aria-label="View live project in new tab"
                     >
                       View Live <ExternalLink size={16} />
@@ -139,7 +139,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
                 <div className="w-full md:w-2/3 space-y-10">
                   <section>
                     <h3 className="flex items-center gap-2 text-xl font-bold text-white mb-4">
-                      <Target className="text-accent-red" aria-hidden="true" /> The Challenge
+                      <Target className="text-primary" aria-hidden="true" /> The Challenge
                     </h3>
                     <p className="text-gray-300 leading-relaxed text-lg">
                       {project.challenge || "Every project begins with a unique hurdle. For this piece, the main objective was to break through the noise of a saturated market and deliver a visual identity that felt both timeless and futuristic."}
@@ -148,7 +148,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
 
                   <section>
                     <h3 className="flex items-center gap-2 text-xl font-bold text-white mb-4">
-                      <Lightbulb className="text-accent-cyan" aria-hidden="true" /> The Solution
+                      <Lightbulb className="text-primary" aria-hidden="true" /> The Solution
                     </h3>
                     <p className="text-gray-300 leading-relaxed text-lg">
                       {project.solution || "I approached this by combining kinetic typography with abstract 3D elements. The pacing was carefully synced to the audio track to create a hypnotic rhythm that keeps the viewer engaged from the first frame."}
@@ -157,7 +157,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
 
                   <section>
                     <h3 className="flex items-center gap-2 text-xl font-bold text-white mb-4">
-                      <TrendingUp className="text-accent-purple" aria-hidden="true" /> The Impact
+                      <TrendingUp className="text-primary" aria-hidden="true" /> The Impact
                     </h3>
                     <p className="text-gray-300 leading-relaxed text-lg">
                       {project.outcome || "The final deliverable resulted in a 40% increase in social engagement and was featured in several industry design showcases. It stands as a testament to the power of motion in storytelling."}

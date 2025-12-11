@@ -1,42 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Home, Briefcase, User, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Home, Grid, User, Mail, MessageSquare } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState<string>('');
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      const sections = ['hero', 'work', 'about', 'contact'];
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+          }
+        }
+      }
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      try {
-        setCurrentTime(now.toLocaleTimeString('en-US', { 
-          hour: '2-digit', 
-          minute: '2-digit',
-          timeZone: 'Asia/Kolkata' 
-        }));
-      } catch (e) {
-        setCurrentTime(now.toLocaleTimeString());
-      }
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const navLinks = [
-    { name: 'Home', href: '#hero', icon: Home },
-    { name: 'Work', href: '#work', icon: Briefcase },
-    { name: 'About', href: '#about', icon: User },
-    { name: 'Contact', href: '#contact', icon: Mail },
-  ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -45,103 +31,81 @@ export const Navbar: React.FC = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setMenuOpen(false);
   };
 
   return (
     <>
-      {/* Dynamic Island Container */}
-      <div className="fixed top-6 left-0 w-full z-50 flex justify-center px-4 pointer-events-none">
+      {/* Top Left Identity (Fixed) */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="fixed top-0 left-0 w-full z-40 p-6 pointer-events-none mix-blend-difference"
+      >
+        <div className="flex items-center gap-3">
+          <div className="size-10 bg-white text-black flex items-center justify-center font-black rounded-md text-xl">
+            Y
+          </div>
+          <div className="flex flex-col">
+            <span className="text-white font-bold text-xl tracking-wider leading-none">YKT</span>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Floating Bottom Dock */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-auto">
         <motion.nav 
-          initial={{ y: -100, opacity: 0 }}
+          initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          className={`pointer-events-auto flex items-center justify-between gap-6 px-6 py-3 rounded-full border border-white/10 shadow-2xl backdrop-blur-md transition-all duration-300 ${
-            scrolled ? 'bg-black/80 w-auto' : 'bg-black/40 w-[90%] md:w-auto'
-          }`}
-          role="navigation"
-          aria-label="Main Navigation"
+          transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
+          className="glass-panel rounded-full p-2 px-3 shadow-2xl flex items-center gap-1 sm:gap-2"
         >
-          {/* Logo */}
           <a 
             href="#hero" 
             onClick={(e) => handleNavClick(e, '#hero')}
-            className="text-xl font-black tracking-tighter text-white hover:text-accent-cyan transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan rounded-md px-2 py-1"
-            aria-label="YKT Portfolio Home"
+            className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-all ${activeSection === 'hero' ? 'text-white bg-white/10' : 'text-white/50 hover:text-white hover:bg-white/5'}`}
+            title="Home"
           >
-            YKT
+            <Home size={20} />
+          </a>
+          
+          <a 
+            href="#work" 
+            onClick={(e) => handleNavClick(e, '#work')}
+            className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-all ${activeSection === 'work' ? 'text-white bg-white/10' : 'text-white/50 hover:text-white hover:bg-white/5'}`}
+            title="Work"
+          >
+            <Grid size={20} />
           </a>
 
-          {/* Desktop Nav Items */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="relative group px-4 py-2 rounded-full text-sm font-medium text-gray-200 hover:text-white hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan min-h-[44px] flex items-center"
-                aria-label={`Navigate to ${link.name} section`}
-              >
-                <span className="relative z-10">{link.name}</span>
-              </a>
-            ))}
-          </div>
-
-          {/* Time Display (Desktop) */}
-          <div className="hidden md:block w-px h-4 bg-white/20 mx-2"></div>
-          <span className="hidden md:block text-xs font-mono text-accent-cyan whitespace-nowrap" aria-label="Current Time in Bengaluru">
-            {currentTime}
-          </span>
-
-          {/* Mobile Hamburger */}
-          <button 
-            onClick={() => setMenuOpen(!menuOpen)} 
-            className="md:hidden text-white p-3 hover:bg-white/10 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan min-w-[48px] min-h-[48px] flex items-center justify-center"
-            aria-label={menuOpen ? "Close Menu" : "Open Menu"}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
+          <a 
+            href="#about" 
+            onClick={(e) => handleNavClick(e, '#about')}
+            className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-all ${activeSection === 'about' ? 'text-white bg-white/10' : 'text-white/50 hover:text-white hover:bg-white/5'}`}
+            title="About"
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            <User size={20} />
+          </a>
+
+          <div className="w-px h-6 bg-white/10 mx-1"></div>
+
+          <a 
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
+            className="hidden sm:flex items-center justify-center px-6 h-10 sm:h-12 rounded-full text-white font-bold text-sm tracking-wide bg-primary shadow-lg hover:bg-primary/90 transition-all mx-1"
+          >
+            Let's Talk
+          </a>
+          
+          {/* Mobile Contact Icon */}
+          <a 
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
+            className="flex sm:hidden items-center justify-center w-10 h-10 rounded-full text-white bg-primary shadow-lg hover:bg-primary/90 transition-all mx-1"
+          >
+            <MessageSquare size={18} />
+          </a>
         </motion.nav>
       </div>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div 
-            id="mobile-menu"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed top-24 right-4 left-4 z-40 bg-gray-900/95 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:hidden overflow-hidden shadow-2xl"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile Navigation Menu"
-          >
-            <div className="flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan min-h-[56px]"
-                >
-                  <div className="p-2 bg-accent-cyan/10 rounded-lg text-accent-cyan">
-                    <link.icon size={20} />
-                  </div>
-                  <span className="text-lg font-medium">{link.name}</span>
-                </a>
-              ))}
-            </div>
-            <div className="mt-6 pt-6 border-t border-white/10 text-center">
-              <span className="text-xs font-mono text-gray-400">
-                BENGALURU • {currentTime}
-              </span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 };

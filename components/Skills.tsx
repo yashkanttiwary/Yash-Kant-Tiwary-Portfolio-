@@ -18,12 +18,10 @@ export const Skills: React.FC = () => {
   ];
 
   return (
-    <section id="skills" className="relative w-full py-32 px-6 bg-gradient-skills overflow-hidden">
-      {/* Darkened overlay for WCAG compliance */}
-      <div className="absolute inset-0 bg-black/90 z-[1]"></div>
+    <section id="skills" className="relative w-full py-32 px-6 bg-background-dark overflow-hidden border-t border-white/5">
       
       {/* Collage Overlay */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none z-0">
+      <div className="absolute inset-0 opacity-5 pointer-events-none z-0">
          <img 
             src="https://images.unsplash.com/photo-1626785774573-4b799314348d?q=80&w=2070&auto=format&fit=crop"
             alt=""
@@ -38,8 +36,8 @@ export const Skills: React.FC = () => {
           whileInView={{ opacity: 1 }}
           className="mb-16"
         >
-          <span className="text-white/60 text-sm uppercase tracking-widest block mb-4">(My Areas of Focus)</span>
-          <h2 className="text-5xl md:text-7xl font-black text-accent-cyan tracking-tighter drop-shadow-[0_0_20px_rgba(0,217,255,0.5)]">
+          <span className="text-primary text-sm uppercase tracking-widest block mb-4 font-bold">(My Areas of Focus)</span>
+          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter">
             Key Skills & <br />Creative Arsenal
           </h2>
         </motion.div>
@@ -53,10 +51,10 @@ export const Skills: React.FC = () => {
               transition={{ delay: idx * 0.1, duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-medium text-white mb-6 border-b border-white/20 pb-2">{col.title}</h3>
+              <h3 className="text-xl font-bold text-white mb-6 border-b border-primary/30 pb-2 inline-block">{col.title}</h3>
               <ul className="space-y-3">
                 {col.items.map((item, i) => (
-                  <li key={i} className="text-gray-300 text-base md:text-lg leading-relaxed">
+                  <li key={i} className="text-gray-400 text-base md:text-lg leading-relaxed font-light hover:text-primary transition-colors cursor-default">
                     {item}
                   </li>
                 ))}
