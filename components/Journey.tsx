@@ -80,6 +80,10 @@ export const Journey: React.FC = () => {
                     alt="Yash Kant Tiwary" 
                     className="w-full h-full object-cover object-top group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop"; // High quality fallback
+                    }}
                  />
               </div>
             </motion.div>

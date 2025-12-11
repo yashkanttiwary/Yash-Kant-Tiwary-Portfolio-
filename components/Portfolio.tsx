@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Asterisk } from 'lucide-react';
@@ -83,15 +84,18 @@ export const Portfolio: React.FC = () => {
   };
 
   const marqueeTexts = ["Motion Design", "3D Rendering", "Art Direction", "Brand Identity"];
-  const marqueeItems = [...marqueeTexts, ...marqueeTexts, ...marqueeTexts, ...marqueeTexts];
+  const marqueeItems = [
+    ...marqueeTexts, ...marqueeTexts, ...marqueeTexts, ...marqueeTexts,
+    ...marqueeTexts, ...marqueeTexts // Added more duplications for smoother infinite scroll on wide screens
+  ];
 
   return (
     <>
       {/* Marquee Strip */}
       <div className="w-full bg-primary text-white py-4 overflow-hidden whitespace-nowrap border-y border-white/10 -rotate-1 scale-105 origin-left shadow-[0_0_30px_rgba(55,19,236,0.4)] relative z-20">
         <motion.div 
-          animate={{ x: [0, -1000] }}
-          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          animate={{ x: [0, -2000] }}
+          transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
           className="flex gap-12 items-center"
         >
           {marqueeItems.map((text, i) => (

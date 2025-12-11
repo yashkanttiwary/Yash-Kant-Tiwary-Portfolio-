@@ -1,19 +1,10 @@
 
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Volume2, VolumeX } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 
 export const Hero: React.FC = () => {
-  const [isMuted, setIsMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
+  
   const scrollToWork = () => {
     const workSection = document.getElementById('work');
     if (workSection) {
@@ -23,22 +14,16 @@ export const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-background-dark">
-      {/* Background Video with Blue/Cyan Tint */}
+      {/* Background Image - Red/Black Abstract */}
       <div className="absolute inset-0 z-0">
-        <video 
-          ref={videoRef}
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="w-full h-full object-cover opacity-60"
-          poster="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop"
-        >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-black-and-white-abstract-technology-lines-background-3140-large.mp4" type="video/mp4" />
-        </video>
-        {/* Deep Blue/Cyan Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a16] via-[#10102b]/80 to-[#0a0a16]/40 mix-blend-multiply"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/10 to-background-dark"></div>
+        <img 
+          src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop"
+          alt="Abstract Red Background" 
+          className="w-full h-full object-cover opacity-80"
+        />
+        {/* Red/Black Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-red-900/20 to-black/60 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-background-dark"></div>
       </div>
 
       <div className="relative z-10 container mx-auto px-6 flex flex-col items-center text-center max-w-5xl pt-10">
@@ -95,22 +80,13 @@ export const Hero: React.FC = () => {
           
           {/* Secondary Pill Button */}
           <button 
-            onClick={() => window.open('https://vimeo.com', '_blank')}
+            onClick={scrollToWork}
             className="px-10 py-4 bg-transparent border border-white/20 text-white rounded-full font-bold text-sm tracking-widest uppercase hover:bg-white/10 hover:border-white/40 transition-all"
           >
             Showreel 2024
           </button>
         </motion.div>
       </div>
-
-      {/* Sound Toggle */}
-      <button 
-        onClick={toggleMute}
-        className="absolute bottom-10 right-10 z-20 text-white/30 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
-        aria-label="Toggle sound"
-      >
-        {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-      </button>
 
       {/* Scroll Indicator */}
       <motion.div 
