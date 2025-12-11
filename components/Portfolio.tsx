@@ -83,7 +83,6 @@ export const Portfolio: React.FC = () => {
   };
 
   const marqueeTexts = ["Motion Design", "3D Rendering", "Art Direction", "Brand Identity"];
-  // Flattening manually to avoid TS issues with array methods on implicit any types
   const marqueeItems = [...marqueeTexts, ...marqueeTexts, ...marqueeTexts, ...marqueeTexts];
 
   return (
@@ -101,28 +100,24 @@ export const Portfolio: React.FC = () => {
         </motion.div>
       </div>
 
-      <section id="work" className="relative py-24 md:py-32 px-6 bg-background-dark z-10">
+      <section id="work" className="relative py-32 md:py-40 px-6 bg-background-dark z-10">
         <div className="container mx-auto max-w-7xl">
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div>
-              <h2 className="text-primary font-bold text-sm tracking-[0.2em] mb-2 uppercase">Selected Works</h2>
+              <h2 className="text-primary font-bold text-sm tracking-[0.2em] mb-4 uppercase">Selected Works</h2>
               <h3 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-none">RECENT<br/>PROJECTS</h3>
             </div>
-            <button className="text-white hover:text-primary transition-colors flex items-center gap-2 border-b border-white/20 pb-1 hover:border-primary group">
+            <button className="text-white hover:text-primary transition-colors flex items-center gap-3 border-b border-white/20 pb-2 hover:border-primary group text-lg">
                 See Full Archive
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
 
           {/* Asymmetric Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-min">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 auto-rows-min">
             {projects.map((project, index) => {
-              // Custom Grid Logic based on index to match reference
-              // Index 0: Wide Hero (Col span 2)
-              // Index 1: Tall Vertical (Row span 2) - This needs to be placed carefully in CSS Grid
-              // Index 2, 3: Standard
-              
+              // Custom Grid Logic based on index
               let gridClass = "aspect-square"; // Default
               if (index === 0) gridClass = "md:col-span-2 aspect-[16/9] md:aspect-[2/1]"; 
               else if (index === 1) gridClass = "md:row-span-2 aspect-[4/5] md:aspect-auto";

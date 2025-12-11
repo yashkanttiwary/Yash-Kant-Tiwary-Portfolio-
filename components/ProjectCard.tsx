@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ArrowUpRight } from 'lucide-react';
 import { Project } from '../types';
 
 interface ProjectCardProps {
@@ -41,7 +41,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenModal, 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative w-full h-full rounded-lg overflow-hidden cursor-pointer bg-gray-900 border border-white/5"
+      className="group relative w-full h-full rounded-2xl overflow-hidden cursor-pointer bg-gray-900 border border-white/5 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-500"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={() => onOpenModal(project)}
@@ -66,35 +66,39 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenModal, 
       </div>
 
       {/* Gradient Overlay - Always visible but stronger at bottom */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity z-20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity z-20" />
 
-      {/* Loading Indicator */}
-      {isPreviewing && isVideoLoading && (
-        <div className="absolute top-4 right-4 z-30">
-           <Loader2 className="w-5 h-5 text-primary animate-spin" />
+      {/* Hover Icon (Top Right) */}
+      <div className="absolute top-6 right-6 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+        <div className="bg-white text-black p-3 rounded-full">
+          {isPreviewing && isVideoLoading ? (
+             <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+             <ArrowUpRight className="w-5 h-5" />
+          )}
         </div>
-      )}
+      </div>
 
-      {/* Content */}
-      <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full z-30 flex flex-col justify-end h-full">
-         <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-            <div className="flex items-center gap-2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-              <span className="px-2 py-1 bg-primary text-[10px] font-bold uppercase tracking-wider text-white rounded-sm">
+      {/* Content Container - Glassmorphism for better separation */}
+      <div className="absolute bottom-0 left-0 w-full z-30 p-4 md:p-6">
+         <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-6 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            <div className="flex items-center justify-between mb-3">
+              <span className="px-2 py-1 bg-primary/20 border border-primary/20 text-[10px] font-bold uppercase tracking-wider text-primary rounded-md">
                 {project.tags[0]}
               </span>
-              <span className="text-gray-300 text-xs uppercase tracking-wider font-mono">
+              <span className="text-gray-400 text-xs uppercase tracking-wider font-mono">
                 {project.year || '2023'}
               </span>
             </div>
             
-            <h4 className="text-2xl md:text-3xl font-bold text-white mb-1 leading-tight">
-              {project.title.toUpperCase()}
+            <h4 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
+              {project.title}
             </h4>
             
-            <div className="h-[1px] w-12 group-hover:w-full bg-white/50 transition-all duration-500 mt-4 mb-2"></div>
+            <div className="h-[1px] w-0 group-hover:w-full bg-primary/50 transition-all duration-500 mt-3"></div>
             
             {variant === 'wide' && (
-              <p className="text-gray-400 text-sm max-w-md hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
+              <p className="text-gray-300 text-sm mt-3 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
                 {project.description}
               </p>
             )}

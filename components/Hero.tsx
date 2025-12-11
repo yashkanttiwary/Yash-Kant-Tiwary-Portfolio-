@@ -1,6 +1,7 @@
+
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Play, ArrowDown, Volume2, VolumeX } from 'lucide-react';
+import { ArrowDown, Volume2, VolumeX } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const [isMuted, setIsMuted] = useState(true);
@@ -22,7 +23,7 @@ export const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-background-dark">
-      {/* Background Video */}
+      {/* Background Video with Blue/Cyan Tint */}
       <div className="absolute inset-0 z-0">
         <video 
           ref={videoRef}
@@ -30,54 +31,74 @@ export const Hero: React.FC = () => {
           loop 
           muted 
           playsInline 
-          className="w-full h-full object-cover opacity-50"
+          className="w-full h-full object-cover opacity-60"
           poster="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop"
         >
           <source src="https://assets.mixkit.co/videos/preview/mixkit-black-and-white-abstract-technology-lines-background-3140-large.mp4" type="video/mp4" />
         </video>
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-background-dark/60 bg-gradient-to-t from-background-dark via-transparent to-background-dark/30"></div>
+        {/* Deep Blue/Cyan Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a16] via-[#10102b]/80 to-[#0a0a16]/40 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/10 to-background-dark"></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 flex flex-col items-center text-center max-w-5xl">
+      <div className="relative z-10 container mx-auto px-6 flex flex-col items-center text-center max-w-5xl pt-10">
+        
+        {/* Freelance Badge */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="mb-8 px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm flex items-center gap-2"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-gray-300 uppercase">Available for Freelance</span>
+        </motion.div>
+
+        {/* Main Typography */}
         <motion.h1 
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display font-black text-6xl md:text-8xl lg:text-9xl tracking-tighter leading-[0.85] text-white mb-8 mix-blend-overlay opacity-90 select-none"
+          className="font-display font-black text-7xl md:text-9xl lg:text-[10rem] tracking-tighter leading-[0.85] text-white mb-8 select-none drop-shadow-2xl"
         >
           VISUAL<br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">ALCHEMY</span>
+          ALCHEMIST
         </motion.h1>
         
+        {/* Subtext */}
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-lg md:text-xl text-gray-300 max-w-2xl font-light mb-12 tracking-wide"
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-lg md:text-xl text-gray-300 max-w-2xl font-light mb-12 tracking-wide leading-relaxed"
         >
-          Crafting digital chaos through motion graphics, 3D conceptual art, and immersive visual storytelling.
+          Crafting digital experiences that merge art, motion, and code into a singular aesthetic reality.
         </motion.p>
         
+        {/* Buttons - Pill Shape */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex flex-wrap gap-4 justify-center"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="flex flex-col sm:flex-row gap-5 justify-center items-center"
         >
+          {/* Primary Pill Button */}
           <button 
             onClick={scrollToWork}
-            className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-md font-bold text-sm tracking-widest uppercase transition-transform hover:scale-105 flex items-center gap-2 shadow-[0_0_20px_rgba(55,19,236,0.5)]"
+            className="px-10 py-4 bg-white text-black rounded-full font-bold text-sm tracking-widest uppercase hover:bg-gray-200 transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
           >
-            <Play size={18} fill="currentColor" />
-            View Showreel
+            View Projects
           </button>
           
+          {/* Secondary Pill Button */}
           <button 
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth'})}
-            className="bg-transparent border border-white/20 hover:bg-white/10 text-white px-8 py-4 rounded-md font-bold text-sm tracking-widest uppercase transition-colors"
+            onClick={() => window.open('https://vimeo.com', '_blank')}
+            className="px-10 py-4 bg-transparent border border-white/20 text-white rounded-full font-bold text-sm tracking-widest uppercase hover:bg-white/10 hover:border-white/40 transition-all"
           >
-            Get in Touch
+            Showreel 2024
           </button>
         </motion.div>
       </div>
@@ -85,7 +106,8 @@ export const Hero: React.FC = () => {
       {/* Sound Toggle */}
       <button 
         onClick={toggleMute}
-        className="absolute bottom-10 right-10 z-20 text-white/50 hover:text-white transition-colors"
+        className="absolute bottom-10 right-10 z-20 text-white/30 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
+        aria-label="Toggle sound"
       >
         {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
       </button>
@@ -94,9 +116,8 @@ export const Hero: React.FC = () => {
       <motion.div 
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 flex flex-col items-center gap-2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 flex flex-col items-center gap-2 pointer-events-none"
       >
-        <span className="text-[10px] uppercase tracking-[0.2em] font-bold">Scroll</span>
         <ArrowDown size={14} />
       </motion.div>
     </section>
